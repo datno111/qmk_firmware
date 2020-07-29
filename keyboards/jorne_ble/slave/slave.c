@@ -44,7 +44,7 @@ void select_row(uint8_t row);
 matrix_row_t read_cols(void);
 static bool bootloader_flag = false;
 
-void matrix_init_user(void) {
+void matrix_init_kb(void) {
   nrfmicro_init();
 
   //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
@@ -61,6 +61,8 @@ void matrix_init_user(void) {
   } else if (row == 0b10) {
     bootloader_flag = true;
   }
+
+  matrix_init_user();
 }
 
 void matrix_scan_user(void) {

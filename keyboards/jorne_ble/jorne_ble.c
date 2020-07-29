@@ -19,55 +19,49 @@ bool has_usb(void) {
     || nrfx_power_usbstatus_get() == NRFX_POWER_USB_STATE_READY);
 }
 
-static bool ble_flag = false;
-
 void nrfmicro_power_enable(bool enable) {
-//  if (has_usb()) enable = true;
+  if (has_usb()) enable = true;
 #ifdef USE_POWER_PIN_GND
-  nrf_gpio_pin_write(POWER_PIN, enable);
+  nrf_gpio_pin_write(POWER_PIN, enable ? 1 : 0);
 #endif
 #ifdef USE_POWER_PIN_VCC
-  nrf_gpio_pin_write(POWER_PIN, !enable);
+  nrf_gpio_pin_write(POWER_PIN, enable ? 0 : 1);
 #endif
 }
 
-uint8_t nrfmicro_switch_pin(void) {
-#ifdef USE_SWITCH_PIN
-  return nrf_gpio_pin_read(SWITCH_PIN);
-#else
-  return 1;
-#endif
+void nrfmicro_blink(int times, int delay) {
+  for (int i=0; i<times*2; i++) {
+    nrf_gpio_pin_write(LED_PIN, i%2==0 ? 1 : 0);
+    nrf_delay_ms(delay);
+  }
 }
-
 
 void check_ble_switch(bool init) {
-  uint8_t value = nrfmicro_switch_pin();
-
+#ifdef USE_SWITCH_PIN
+  static bool ble_flag = false;
+  uint8_t value = nrf_gpio_pin_read(SWITCH_PIN);
   if (init || ble_flag != value) {
     ble_flag = value;
-
     // mind that it doesn't disable BLE completely, it only disables send
     set_usb_enabled(!ble_flag);
     set_ble_enabled(ble_flag);
-
     nrf_gpio_pin_clear(LED_PIN);
-
-    if (ble_flag) {
-      // blink twice on ble enabled
-      for (int i=0; i<2; i++) {
-        nrf_gpio_pin_set(LED_PIN);
-        nrf_delay_ms(100);
-        nrf_gpio_pin_clear(LED_PIN);
-        nrf_delay_ms(100);
-      }
-    }
+    // blink on ble enabled
+    if (ble_flag) nrmicro_blink(2, 100);
   }
+#else
+  // just use BT for now
+  bool ble_flag = true;
+  (void)ble_flag; // may be unused on slave
+  set_usb_enabled(!ble_flag);
+  set_ble_enabled(ble_flag);
+#endif
 }
 
 void nrfmicro_init(void) {
   nrf_gpio_cfg_output(LED_PIN);
 
-#ifdef USE_POWER_PIN
+#if defined USE_POWER_PIN_GND || defined USE_POWER_PIN_VCC
   nrf_gpio_cfg_output(POWER_PIN);
 #endif
 
@@ -95,17 +89,20 @@ void nrfmicro_init(void) {
 
 #ifdef USE_MCP73831_CTRL
   //nrf_gpio_cfg_input(PROG_PIN, NRF_GPIO_PIN_NOPULL); // disabled
-  nrf_gpio_cfg_input(PROG_PIN, NRF_GPIO_PIN_PULLDOWN); // enabled, Rprog = 13K, 1000/13K ~= 78 mA current
+  nrf_gpio_cfg_input(PROG_PIN, NRF_GPIO_PIN_PULLDOWN); // enabled, Rprog = 13K, ~78 mA current
 #endif
 
 #ifdef USE_TP4054_CTRL
   //nrf_gpio_cfg_input(PROG_PIN, NRF_GPIO_PIN_NOPULL); // disabled
-  nrf_gpio_cfg_output(PROG_PIN); nrf_gpio_pin_write(PROG_PIN, 0); // enabled
+  //nrf_gpio_cfg_output(PROG_PIN); nrf_gpio_pin_write(PROG_PIN, 0); // enabled
 #endif
 
   nrfmicro_power_enable(true);
 
   check_ble_switch(true);
+
+  // blink on start
+  nrfmicro_blink(2, 100);
 }
 
 // called every matrix_scan_user
