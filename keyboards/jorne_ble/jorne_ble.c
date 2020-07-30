@@ -21,10 +21,10 @@ bool has_usb(void) {
 
 void nrfmicro_power_enable(bool enable) {
   if (has_usb()) enable = true;
-#ifdef USE_POWER_PIN_GND
+#ifdef USE_GND_POWER_PIN
   nrf_gpio_pin_write(POWER_PIN, enable ? 1 : 0);
 #endif
-#ifdef USE_POWER_PIN_VCC
+#ifdef USE_VCC_POWER_PIN
   nrf_gpio_pin_write(POWER_PIN, enable ? 0 : 1);
 #endif
 }
@@ -61,7 +61,7 @@ void check_ble_switch(bool init) {
 void nrfmicro_init(void) {
   nrf_gpio_cfg_output(LED_PIN);
 
-#if defined USE_POWER_PIN_GND || defined USE_POWER_PIN_VCC
+#if defined USE_GND_POWER_PIN_GND || defined USE_VCC_POWER_PIN
   nrf_gpio_cfg_output(POWER_PIN);
 #endif
 

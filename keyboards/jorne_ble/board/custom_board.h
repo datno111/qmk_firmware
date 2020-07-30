@@ -14,7 +14,7 @@ extern "C" {
 #ifdef USE_NRFMICRO_1_1
 #define FLIPPED_NRFMICRO
 #define USE_SWITCH_PIN
-#define USE_POWER_PIN_GND
+#define USE_GND_POWER_PIN
 #define USE_BATTERY_PIN
 #define BATTERY_R1 10
 #define BATTERY_R2 13
@@ -24,7 +24,7 @@ extern "C" {
 #define USE_INTERNAL_LDO
 #define USE_MCP73811_CTRL
 //#define USE_MCP73831_CTRL
-#define USE_POWER_PIN_VCC
+#define USE_VCC_POWER_PIN
 #define USE_BATTERY_PIN
 #define BATTERY_R1 820
 #define BATTERY_R2 2000
@@ -32,11 +32,16 @@ extern "C" {
 
 #ifdef USE_NRFMICRO_1_3
 #define USE_TP4054_CTRL
-#define USE_POWER_PIN_VCC
+#define USE_VCC_POWER_PIN
 #define USE_BATTERY_PIN
 #define BATTERY_R1 820
 #define BATTERY_R2 2000
 #endif
+
+// there are 3 types of charger control (set PROG_PIN to input-nopull to disable):
+// USE_MCP73811_CTRL - STAT_PIN is enable/disable, PROG_PIN is 85/450 mA
+// USE_MCP73831_CTRL - NO PROG resistor (!), internal PROG_PIN pull-down only
+// USE_TP4054_CTRL - 10K or 2K PROG resistor plus optional PROG_PIN pull-down
 
 #define PIN1 GPIO(0,6)
 #define PIN2 GPIO(0,8)
@@ -89,6 +94,9 @@ extern "C" {
 
 #define STAT_PIN GPIO(0,7)
 #define PROG_PIN GPIO(0,5)
+
+// pin 0.04, must be analog
+#define BATTERY_PIN NRF_SAADC_INPUT_AIN2
 
 // i2c pins
 #define CONFIG_PIN_SDA PIN5
