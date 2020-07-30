@@ -38,10 +38,10 @@ extern "C" {
 #define BATTERY_R2 2000
 #endif
 
-// there are 3 types of charger control (set PROG_PIN to input-nopull to disable):
-// USE_MCP73811_CTRL - STAT_PIN is enable/disable, PROG_PIN is 85/450 mA
-// USE_MCP73831_CTRL - NO PROG resistor (!), internal PROG_PIN pull-down only
-// USE_TP4054_CTRL - 10K or 2K PROG resistor plus optional PROG_PIN pull-down
+// there are currently 3 types of charger control, some of them use 13K internal pull-down:
+// USE_MCP73811_CTRL - STAT_PIN is 0/1: disable/enable, PROG_PIN is 0/1: 85/450 mA
+// USE_MCP73831_CTRL - no resistor (!), PROG_PIN is no-pull/pull-down: disable/77 mA
+// USE_TP4054_CTRL - 10K resistor, PROG_PIN is no-pull/gnd/pull-down: disable/100 mA/43 mA
 
 #define PIN1 GPIO(0,6)
 #define PIN2 GPIO(0,8)
