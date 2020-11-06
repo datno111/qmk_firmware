@@ -35,8 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT         FunkyApe BLE
 #define DESCRIPTION     A split keyboard for walking apes
 
-#define MATRIX_ROWS 8
-#define MATRIX_COLS 7
+#define MATRIX_ROWS 10
+#define MATRIX_COLS 6
 
 #define DIODE_DIRECTION COL2ROW
 
