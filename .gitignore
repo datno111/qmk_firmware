@@ -13,6 +13,8 @@
 *.map
 *.sym
 *.swp
+*.a
+*.uf2
 tags
 *~
 build/
@@ -37,6 +39,7 @@ doxygen/
 /keyboards/*/*/*/keymaps/Makefile
 /keyboards/*/*/*/*/keymaps/Makefile
 /keyboards/*/*/*/*/*/keymaps/Makefile
+/lib/*.d
 
 # Eclipse/PyCharm/Other IDE Settings
 .cproject
