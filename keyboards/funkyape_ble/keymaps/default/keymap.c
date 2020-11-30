@@ -81,7 +81,22 @@ extern keymap_config_t keymap_config;
 #define HT_RSFQ RSFT_T(KC_QUOT)
 #define HT_BSCT RCTL_T(KC_BSLS)
 
+#define TD_ALGU TD(ALTGUI)
+#define TD_GUAL TD(GUIALT)
+#define TD_SCAP TD(SFTCAP)
+
 #define SH_TG KC_TRNS
+
+// Tap Dance declarations
+enum tap_dances { ALTGUI, GUIALT, SFTCAP };
+
+// Tap Dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    // Tap once for Escape, twice for Caps Lock
+    [ALTGUI] = ACTION_TAP_DANCE_DOUBLE(KC_LALT, KC_LGUI),
+    [GUIALT] = ACTION_TAP_DANCE_DOUBLE(KC_LGUI, KC_LALT),
+    [SFTCAP] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS)
+};
 
 
 uint32_t layer_state_set_user(uint32_t state) {
@@ -95,11 +110,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
            KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
         //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-           KC_LSFT, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, HT_RSFQ,
+           TD_SCAP, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, HT_RSFQ,
         //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
            KC_LCTRL,KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_DOWN,          KC_UP,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, HT_BSCT,
         //└────────┴────────┴┬───────┴┬───────┴┬───────┴┬───────┴────────┴┐      ┌┴────────┴───────┬┴───────┬┴───────┬┴───────┬┴────────┴────────┘
-                              KC_MINS, KC_LBRC, KC_LALT, LT(_LOWER,KC_SPC),       LT(_RAISE,KC_ENT),KC_RGUI, KC_RBRC, KC_EQL
+                              KC_MINS, KC_LBRC, TD_ALGU, LT(_LOWER,KC_SPC),       LT(_RAISE,KC_ENT),TD_GUAL, KC_RBRC, KC_EQL
                            //└────────┴────────┴────────┴─────────────────┘      └─────────────────┴────────┴────────┴────────┘
   ),
 
