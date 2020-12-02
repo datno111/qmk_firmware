@@ -120,6 +120,10 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 }
 #endif
 
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+    }
+
 // Setting ADJUST layer RGB back to default
 void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
     if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
