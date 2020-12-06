@@ -34,5 +34,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define DIODE_DIRECTION COL2ROW
 
-// Use the lily version to get the Lily58 logo instead of the qmk logo
-#define OLED_FONT_H "lib/glcdfont_lily.c"
+// Use the ape version to get the Ape logo instead of the qmk logo
+#define OLED_FONT_H "lib/glcdfont_ape.c"
