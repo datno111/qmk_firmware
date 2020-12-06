@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
            TD_SCAP, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, HT_RSFQ,
         //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-           KC_LCTRL,KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_DOWN,          KC_UP,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, HT_BSCT,
+           KC_LCTRL,KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_MUTE, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, HT_BSCT,
         //└────────┴────────┴┬───────┴┬───────┴┬───────┴┬───────┴────────┴┐      ┌┴────────┴───────┬┴───────┬┴───────┬┴───────┬┴────────┴────────┘
                               KC_MINS, KC_LBRC, TD_ALGU, LT(_LOWER,KC_SPC),       LT(_RAISE,KC_ENT),TD_GUAL, KC_RBRC, KC_EQL
                            //└────────┴────────┴────────┴─────────────────┘      └─────────────────┴────────┴────────┴────────┘
@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
            _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_HOME, KC_END,                             KC_MUTE, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-           _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, XXXXXXX,  KC_BTN4,         KC_BTN5, KC_VOLD, KC_MPRV, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+           _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, XXXXXXX,  _______,         _______, KC_VOLD, KC_MPRV, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         //└────────┴────────┴┬───────┴┬───────┴┬───────┴┬───────┴────────┴┐      ┌┴────────┴───────┬┴───────┬┴───────┬┴───────┬┴────────┴────────┘
                               RAISE,   _______, _______,     _______,                   _______,    _______, _______, LOWER
                            //└────────┴────────┴────────┴─────────────────┘      └─────────────────┴────────┴────────┴────────┘
@@ -103,18 +103,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef ENCODER_ENABLE
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
-        // Volume control
         if (clockwise) {
-            tap_code(KC_BTN5);
+            tap_code(KC_PGUP);
         } else {
-            tap_code(KC_BTN4);
+            tap_code(KC_PGDN);
         }
     } else if (index == 1) {
-        // Page up/Page down
         if (clockwise) {
-            tap_code(KC_DOWN);
+            tap_code(KC_VOLU);
         } else {
-            tap_code(KC_UP);
+            tap_code(KC_VOLD);
         }
     }
 }
