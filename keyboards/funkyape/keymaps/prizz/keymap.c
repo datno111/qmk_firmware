@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
            TD_SCAP, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, HT_RSFQ,
         //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-           KC_LCTRL,KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    XXXXXXX,          KC_MUTE, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, HT_BSCT,
+           KC_LCTRL,KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    XXXXXXX,          XXXXXXX, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, HT_BSCT,
         //└────────┴────────┴┬───────┴┬───────┴┬───────┴┬───────┴────────┴┐      ┌┴────────┴───────┬┴───────┬┴───────┬┴───────┬┴────────┴────────┘
                               KC_MINS, KC_LBRC, TD_ALGU, LT(_LOWER,KC_SPC),       LT(_RAISE,KC_ENT),TD_GUAL, KC_RBRC, KC_EQL
                            //└────────┴────────┴────────┴─────────────────┘      └─────────────────┴────────┴────────┴────────┘
@@ -98,23 +98,97 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               _______, _______, _______,     _______,                   _______,    _______, _______, _______
                            //└────────┴────────┴────────┴─────────────────┘      └─────────────────┴────────┴────────┴────────┘
         )
-        };
+};
+
+bool     is_alt_tab_active = false;
+uint16_t alt_tab_timer     = 0;
+
+void matrix_scan_user(void) {
+    if (is_alt_tab_active) {
+        if (timer_elapsed(alt_tab_timer) > 500) {
+            unregister_code(KC_LALT);
+            is_alt_tab_active = false;
+        }
+    }
+}
 
 #ifdef ENCODER_ENABLE
 void encoder_update_user(uint8_t index, bool clockwise) {
+    // Encoder on master half
     if (index == 0) {
-        // Volume control
-        if (clockwise) {
-            tap_code(KC_BTN5);
-        } else {
-            tap_code(KC_BTN4);
+        switch (get_highest_layer(layer_state)) {
+            case _QWERTY:
+                if (!is_alt_tab_active) {
+                    is_alt_tab_active = true;
+                    register_code(KC_LALT);
+                }
+                if (clockwise) {
+                    alt_tab_timer = timer_read();
+                    tap_code16(KC_TAB);
+                } else {
+                    alt_tab_timer = timer_read();
+                    tap_code16(S(KC_TAB));
+                }
+                break;
+            case _LOWER:
+                if (clockwise) {
+                    tap_code16(C(KC_TAB));
+                } else {
+                    tap_code16(S(C(KC_TAB)));
+                }
+                break;
+            case _RAISE:
+                if (clockwise) {
+                    tap_code(KC_BTN5);
+                } else {
+                    tap_code(KC_BTN4);
+                }
+                break;
+            case _ADJUST:
+                if (clockwise) {
+                    rgblight_step();
+                } else {
+                    rgblight_step_reverse();
+                }
+                break;
+            default:
+                // Do nothing
+                break;
         }
+        // Encoder on slave half
     } else if (index == 1) {
-        // Page up/Page down
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
+        switch (get_highest_layer(layer_state)) {
+            case _QWERTY:
+                if (clockwise) {
+                    tap_code(KC_UP);
+                } else {
+                    tap_code(KC_DOWN);
+                }
+                break;
+            case _LOWER:
+                if (clockwise) {
+                    tap_code(KC_VOLU);
+                } else {
+                    tap_code(KC_VOLD);
+                }
+                break;
+            case _RAISE:
+                if (clockwise) {
+                    tap_code(KC_RGHT);
+                } else {
+                    tap_code(KC_LEFT);
+                }
+                break;
+            case _ADJUST:
+                if (clockwise) {
+                    rgblight_increase_val();
+                } else {
+                    rgblight_decrease_val();
+                }
+                break;
+            default:
+                // Do nothing
+                break;
         }
     }
 }
@@ -122,7 +196,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-    }
+}
 
 // Setting ADJUST layer RGB back to default
 void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
