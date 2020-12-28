@@ -74,8 +74,8 @@ extern keymap_config_t keymap_config;
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 
-#define MIN_BTA LT(_BT_ADJ,KC_MINS)
-#define EQL_BTA LT(_BT_ADJ,KC_EQL)
+#define DWN_BTA LT(_BT_ADJ,KC_DOWN)
+#define UP_BTA LT(_BT_ADJ,KC_UP)
 
 #define HT_LFCA SFT_T(KC_CAPS)
 #define HT_RSFQ RSFT_T(KC_QUOT)
@@ -112,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
            TD_SCAP, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, HT_RSFQ,
         //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-           KC_LCTRL,KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_DOWN,          KC_UP,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, HT_BSCT,
+           KC_LCTRL,KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    DWN_BTA,          UP_BTA,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, HT_BSCT,
         //└────────┴────────┴┬───────┴┬───────┴┬───────┴┬───────┴────────┴┐      ┌┴────────┴───────┬┴───────┬┴───────┬┴───────┬┴────────┴────────┘
                               KC_MINS, KC_LBRC, TD_ALGU, LT(_LOWER,KC_SPC),       LT(_RAISE,KC_ENT),TD_GUAL, KC_RBRC, KC_EQL
                            //└────────┴────────┴────────┴─────────────────┘      └─────────────────┴────────┴────────┴────────┘
@@ -124,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
            _______, XXXXXXX, KC_UP,   XXXXXXX, KC_PGUP, XXXXXXX,                            KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX, XXXXXXX, KC_DEL,
         //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-           KC_CAPS, KC_LEFT, KC_DOWN, KC_RGHT, KC_HOME, KC_END,                             KC_MUTE, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+           _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_HOME, KC_END,                             KC_MUTE, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
            _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, XXXXXXX, KC_BTN4,          KC_BTN5, KC_VOLD, KC_MPRV, XXXXXXX, XXXXXXX, XXXXXXX, _______,
         //└────────┴────────┴┬───────┴┬───────┴┬───────┴┬───────┴────────┴┐      ┌┴────────┴───────┬┴───────┬┴───────┬┴───────┬┴────────┴────────┘
