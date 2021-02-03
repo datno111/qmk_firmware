@@ -2,12 +2,15 @@
 # Helix keyboard customize
 # you can edit following Variables
 HELIX_ROWS = 5              # Helix Rows is 4 or 5
+
+MOUSEKEY_ENABLE = yes     	# Mouse keys
+EXTRAKEY_ENABLE = yes     	# Audio control and System control
 LED_BACK_ENABLE = no        # LED backlight (Enable WS2812 RGB underlight.)
 LED_UNDERGLOW_ENABLE = yes  # LED underglow (Enable WS2812 RGB underlight.)
 LED_ANIMATIONS = yes        # LED animations
-OLED_ENABLE = no            # OLED_ENABLE
+
 LOCAL_GLCDFONT = yes        # use each keymaps "helixfont.h" insted of "common/glcdfont.c"
-TAP_DANCE_ENABLE = no
+
 
 define HELIX_CUSTOMISE_MSG
   $(info Helix customize)

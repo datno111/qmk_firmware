@@ -2,13 +2,9 @@
 DEFAULT_FOLDER = funkyape_ble/master
 
 NRF_DEBUG = no
-
-RGBLIGHT_ENABLE = yes
-MOUSEKEY_ENABLE = yes	# Mouse keys
-EXTRAKEY_ENABLE = yes	# Audio control and System control
-CONSOLE_ENABLE = yes	# Console for debug
-COMMAND_ENABLE = yes    # Commands for debug and configuration
-NKRO_ENABLE = no	    # USB Nkey Rollover
+OLED_ENABLE = no        # Oled lcd
+CONSOLE_ENABLE = no		# Console for debug
+COMMAND_ENABLE = no		# Commands for debug and configuration
 CUSTOM_MATRIX = yes 	# This flag should be on for nrf52
 
 NO_USB_STARTUP_CHECK = yes
