@@ -114,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
     _______, XXXXXXX, KC_UP,   XXXXXXX, KC_PGUP, XXXXXXX,                            KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX, XXXXXXX, KC_DEL,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-    KC_CAPS, KC_LEFT, KC_DOWN, KC_RGHT, KC_HOME, KC_END,                             KC_MUTE, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_HOME, KC_END,                             KC_MUTE, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
 // ├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
     _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, XXXXXXX, KC_BTN4,          KC_BTN5, KC_VOLD, KC_MPRV, XXXXXXX, XXXXXXX, XXXXXXX, _______,
 // └────────┴────────┴┬───────┴┬───────┴┬───────┴┬───────┴────────┴┐      ┌┴────────┴───────┬┴───────┬┴───────┬┴───────┬┴────────┴────────┘
@@ -126,13 +126,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
     KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  LCA(KC_DEL),
 // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-    _______, KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U, XXXXXXX,                            XXXXXXX, XXXXXXX, KC_INS,  KC_PAUS, KC_PSCR, KC_DEL,
+    _______, KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U, XXXXXXX,                            XXXXXXX, KC_CAPS, KC_INS,  KC_PAUS, KC_PSCR, KC_DEL,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
     _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN3, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
 // ├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
     _______, KC_WH_L, KC_BTN3, KC_WH_R, KC_WH_D, XXXXXXX, KC_BTN4,          KC_BTN5, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSLS, _______,
 // └────────┴────────┴┬───────┴┬───────┴┬───────┴┬───────┴────────┴┐      ┌┴────────┴───────┬┴───────┬┴───────┬┴───────┬┴────────┴────────┘
-                       RAISE,   _______, _______,     _______,                   _______,    _______, _______, LOWER
+                       RAISE,   _______, KC_LGUI,     _______,                   _______,    KC_LALT, _______, LOWER
                    // └────────┴────────┴────────┴─────────────────┘      └─────────────────┴────────┴────────┴────────┘
 ),
 
