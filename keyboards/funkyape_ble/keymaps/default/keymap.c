@@ -196,9 +196,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RGB_TOG:
       if (record->event.pressed) {
         nrfmicro_power_enable(!rgblight_config.enable);  // enable the VCC pin
-#ifdef SSD1306OLED
-        iota_gfx_init(!IS_LEFT_HAND);  // enable the OLED screen
-#endif
       }
       break;
     case RGBRST:
@@ -206,9 +203,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         nrfmicro_power_enable(true);
         eeconfig_update_rgblight_default();
         rgblight_enable();
-#ifdef SSD1306OLED
-        iota_gfx_init(!IS_LEFT_HAND);  // enable the OLED screen
-#endif
       }
       break;
 #endif

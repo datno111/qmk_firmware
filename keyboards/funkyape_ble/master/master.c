@@ -43,7 +43,7 @@ void select_row(uint8_t row);
 matrix_row_t read_cols(void);
 static bool bootloader_flag = false;
 
-void matrix_init_kb() {
+void matrix_init_kb(void) {
   nrfmicro_init();
 
   select_row(3);

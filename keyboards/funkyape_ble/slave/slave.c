@@ -45,11 +45,6 @@ static bool bootloader_flag = false;
 void matrix_init_kb(void) {
   nrfmicro_init();
 
-//SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
-#ifdef SSD1306OLED
-  iota_gfx_init(!IS_LEFT_HAND);  // turns on the display
-#endif
-
   select_row(3);
   wait_us(50);
   matrix_row_t row = read_cols();
@@ -60,6 +55,10 @@ void matrix_init_kb(void) {
     bootloader_flag = true;
   }
 
+//SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
+#ifdef SSD1306OLED
+  iota_gfx_init(!IS_LEFT_HAND);  // turns on the display
+#endif
   matrix_init_user();
 }
 

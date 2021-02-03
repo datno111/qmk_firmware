@@ -28,9 +28,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BLE_HID_SLAVE_LATENCY 3
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID 0xFEED
-#define PRODUCT_ID 0x3060
-#define DEVICE_VER 0x0001
+#define VENDOR_ID 0x04AC
+#define PRODUCT_ID 0xFA58
+#define DEVICE_VER 0x1001
 #define MANUFACTURER Prizz
 #define PRODUCT FunkyApe BLE
 #define DESCRIPTION     A split keyboard for walking apes
