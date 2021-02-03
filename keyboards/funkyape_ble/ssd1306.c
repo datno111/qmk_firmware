@@ -1,7 +1,9 @@
 #ifdef SSD1306OLED
 #include "ssd1306.h"
-#include "nrf/i2c.h"
+
 #include <string.h>
+
+#include "nrf/i2c.h"
 #include "print.h"
 #ifdef ADAFRUIT_BLE_ENABLE
 #include "adafruit_ble.h"
@@ -25,8 +27,8 @@ extern const unsigned char font[] PROGMEM;
 //#define BatteryUpdateInterval 10000 /* milliseconds */
 
 // 'last_flush' is declared as uint16_t,
-// so this must be less than 65535 
-int ScreenOffInterval=60000; /* milliseconds */
+// so this must be less than 65535
+int ScreenOffInterval = 60000; /* milliseconds */
 #if DEBUG_TO_SCREEN
 static uint8_t displaying;
 #endif
@@ -41,7 +43,7 @@ uint8_t oled_buff[512];
 static inline bool _send_cmd1(uint8_t cmd) {
   bool res = false;
   uint8_t data[] = {0x00, cmd};
-  res = !i2c_transmit(SSD1306_ADDRESS, data, sizeof(data)/sizeof(data[0]));
+  res = !i2c_transmit(SSD1306_ADDRESS, data, sizeof(data) / sizeof(data[0]));
 
   return res;
 }
@@ -51,7 +53,7 @@ static inline bool _send_cmd1(uint8_t cmd) {
 static inline bool _send_cmd2(uint8_t cmd, uint8_t opr) {
   bool res = false;
   uint8_t data[] = {0x00, cmd, opr};
-  res = !i2c_transmit(SSD1306_ADDRESS, data, sizeof(data)/sizeof(data[0]));
+  res = !i2c_transmit(SSD1306_ADDRESS, data, sizeof(data) / sizeof(data[0]));
 
   return res;
 }
@@ -61,14 +63,23 @@ static inline bool _send_cmd2(uint8_t cmd, uint8_t opr) {
 static inline bool _send_cmd3(uint8_t cmd, uint8_t opr1, uint8_t opr2) {
   bool res = false;
   uint8_t data[] = {0x00, cmd, opr1, opr2};
-  res = !i2c_transmit(SSD1306_ADDRESS, data, sizeof(data)/sizeof(data[0]));
+  res = !i2c_transmit(SSD1306_ADDRESS, data, sizeof(data) / sizeof(data[0]));
 
   return res;
 }
 
-#define send_cmd1(c) if (!_send_cmd1(c)) {goto done;}
-#define send_cmd2(c,o) if (!_send_cmd2(c,o)) {goto done;}
-#define send_cmd3(c,o1,o2) if (!_send_cmd3(c,o1,o2)) {goto done;}
+#define send_cmd1(c)    \
+  if (!_send_cmd1(c)) { \
+    goto done;          \
+  }
+#define send_cmd2(c, o)    \
+  if (!_send_cmd2(c, o)) { \
+    goto done;             \
+  }
+#define send_cmd3(c, o1, o2)    \
+  if (!_send_cmd3(c, o1, o2)) { \
+    goto done;                  \
+  }
 
 static void clear_display(void) {
   matrix_clear(&display);
@@ -80,7 +91,7 @@ static void clear_display(void) {
 
   memset(oled_buff, 0x00, sizeof(oled_buff));
   oled_buff[0] = 0x40;
-  i2c_transmit(SSD1306_ADDRESS, oled_buff, 1+MatrixRows*DisplayWidth);
+  i2c_transmit(SSD1306_ADDRESS, oled_buff, 1 + MatrixRows * DisplayWidth);
 
   display.dirty = false;
 
@@ -112,16 +123,15 @@ bool iota_gfx_init(bool rotate) {
 
   send_cmd2(SetDisplayOffset, 0);
 
-
   send_cmd1(SetStartLine | 0x0);
   send_cmd2(SetChargePump, 0x14 /* Enable */);
   send_cmd2(SetMemoryMode, 0 /* horizontal addressing */);
 
-  if(rotate){
+  if (rotate) {
     // the following Flip the display orientation 180 degrees
     send_cmd1(SegRemap);
     send_cmd1(ComScanInc);
-  }else{
+  } else {
     // Flips the display orientation 0 degrees
     send_cmd1(SegRemap | 0x1);
     send_cmd1(ComScanDec);
@@ -136,7 +146,7 @@ bool iota_gfx_init(bool rotate) {
   send_cmd1(DeActivateScroll);
   send_cmd1(DisplayOn);
 
-  send_cmd2(SetContrast, 0); // Dim
+  send_cmd2(SetContrast, 0);  // Dim
 
   clear_display();
 
@@ -215,7 +225,7 @@ void matrix_write(struct CharacterMatrix *matrix, const char *data) {
 }
 
 void matrix_write_ln(struct CharacterMatrix *matrix, const char *data) {
-  char data_ln[strlen(data)+2];
+  char data_ln[strlen(data) + 2];
   snprintf(data_ln, sizeof(data_ln), "%s\n", data);
   matrix_write(matrix, data_ln);
 }
@@ -276,7 +286,7 @@ void matrix_render(struct CharacterMatrix *matrix) {
     }
   }
 
-  i2c_transmit(SSD1306_ADDRESS, oled_buff, 1 + MatrixRows*MatrixCols*FontWidth);
+  i2c_transmit(SSD1306_ADDRESS, oled_buff, 1 + MatrixRows * MatrixCols * FontWidth);
 
   matrix->dirty = false;
 
@@ -291,14 +301,13 @@ void iota_gfx_flush(void) {
   matrix_render(&display);
 }
 
-__attribute__ ((weak))
-void iota_gfx_task_user(void) {
+__attribute__((weak)) void iota_gfx_task_user(void) {
 }
 
 void iota_gfx_task(void) {
   iota_gfx_task_user();
 
-  if (display.dirty|| force_dirty) {
+  if (display.dirty || force_dirty) {
     iota_gfx_flush();
     force_dirty = false;
   }

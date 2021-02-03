@@ -17,16 +17,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "matrix.h"
 #undef PACKED
-#include "nrf.h"
 #include "app_ble_func.h"
+#include "nrf.h"
 #include "wait.h"
 
 #ifdef SSD1306OLED
-  #include "ssd1306.h"
+#include "ssd1306.h"
 #endif
 
-#include "nrf_gpio.h"
 #include "nrf_delay.h"
+#include "nrf_gpio.h"
 
 #ifdef RGBLIGHT_ENABLE
 #include "rgblight.h"
@@ -56,17 +56,17 @@ void matrix_init_kb() {
     bootloader_flag = true;
   }
 
-  //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
-  #ifdef SSD1306OLED
-      iota_gfx_init(!IS_LEFT_HAND);   // turns on the display
-  #endif
+//SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
+#ifdef SSD1306OLED
+  iota_gfx_init(!IS_LEFT_HAND);  // turns on the display
+#endif
   matrix_init_user();
 }
 
 void matrix_scan_kb(void) {
-  #ifdef SSD1306OLED
-    iota_gfx_task();  // this is what updates the display continuously
-  #endif
+#ifdef SSD1306OLED
+  iota_gfx_task();  // this is what updates the display continuously
+#endif
 
   nrfmicro_update();
   matrix_scan_user();

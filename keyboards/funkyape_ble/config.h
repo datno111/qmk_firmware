@@ -28,11 +28,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BLE_HID_SLAVE_LATENCY 3
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x3060
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    Prizz
-#define PRODUCT         FunkyApe BLE
+#define VENDOR_ID 0xFEED
+#define PRODUCT_ID 0x3060
+#define DEVICE_VER 0x0001
+#define MANUFACTURER Prizz
+#define PRODUCT FunkyApe BLE
 #define DESCRIPTION     A split keyboard for walking apes
 
 #define MATRIX_ROWS 10
@@ -44,7 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define MATRIX_HAS_GHOST
 
 /* Set 0 if debouncing isn't needed */
-#define DEBOUNCE    1
+#define DEBOUNCE 1
 
 #define TAPPING_TERM 200
 
@@ -55,11 +55,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* key combination for command */
 #define IS_COMMAND() ( \
-    keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
-)
+    keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)))
 
-#define PROGMEM // arm-gcc does not interpret PROGMEM
-#define RGB_DI_PIN PIN1 //D3     // The pin the LED strip is connected to
+#define PROGMEM          // arm-gcc does not interpret PROGMEM
+#define RGB_DI_PIN PIN1  //D3     // The pin the LED strip is connected to
 
 #define RGBLED_NUM 6
 #define RGBLIGHT_SPLIT 6

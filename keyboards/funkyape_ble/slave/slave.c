@@ -15,21 +15,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "matrix.h"
-
-#include "wait.h"
 #include "app_ble_func.h"
 #include "bootloader.h"
+#include "matrix.h"
+#include "wait.h"
 
 #ifdef SSD1306OLED
-  #include "ssd1306.h"
+#include "ssd1306.h"
 #endif
 
-#include "nrf_power.h"
 #include "nrf.h"
-
-#include "nrf_gpio.h"
 #include "nrf_delay.h"
+#include "nrf_gpio.h"
+#include "nrf_power.h"
 
 #ifdef RGBLIGHT_ENABLE
 #include "rgblight.h"
@@ -47,10 +45,10 @@ static bool bootloader_flag = false;
 void matrix_init_kb(void) {
   nrfmicro_init();
 
-  //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
-  #ifdef SSD1306OLED
-      iota_gfx_init(!IS_LEFT_HAND);   // turns on the display
-  #endif
+//SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
+#ifdef SSD1306OLED
+  iota_gfx_init(!IS_LEFT_HAND);  // turns on the display
+#endif
 
   select_row(3);
   wait_us(50);
@@ -66,14 +64,13 @@ void matrix_init_kb(void) {
 }
 
 void matrix_scan_user(void) {
- static int cnt;
- if (bootloader_flag && cnt++==500) {
-   bootloader_jump();
- }
+  static int cnt;
+  if (bootloader_flag && cnt++ == 500) {
+    bootloader_jump();
+  }
 #ifdef SSD1306OLED
   iota_gfx_task();  // this is what updates the display continuously
 #endif
 
   nrfmicro_update();
 }
-
